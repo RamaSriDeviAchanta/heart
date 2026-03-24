@@ -1,0 +1,80 @@
+{% extends 'users/userbase.html' %}
+{% block contents %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+<style>
+    /* Table full visibility */
+    table.dataTable {
+        width: 100% !important;
+        border-collapse: collapse;
+    }
+
+    /* Header */
+    table.dataTable thead {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+    }
+
+    table.dataTable thead th {
+        padding: 12px;
+        border: 1px solid #ccc;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* Data cells */
+    table.dataTable td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        color: black;
+        font-size: 14px;
+    }
+
+    /* Rows */
+    table.dataTable tbody tr:nth-child(even) {
+        background-color: #f2f4ff;
+    }
+
+    table.dataTable tbody tr:hover {
+        background-color: #dbeafe;
+    }
+
+    /* Search box */
+    .dataTables_filter input {
+        padding: 6px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    /* Pagination */
+    .dataTables_paginate .paginate_button {
+        padding: 5px 10px;
+        margin: 2px;
+        background: #667eea !important;
+        color: white !important;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+$(document).ready(function(){
+    $('table').DataTable({
+        "pageLength": 50
+    });
+});
+</script>
+
+<div class="section-header">
+    <h2 class="section-title wow fadeInDown" style="color: black;">
+        Dataset view :
+    </h2>
+</div>
+
+<div class="row" style="margin:10px;">   
+    {{data|safe}}
+</div>
+
+{% endblock %}
