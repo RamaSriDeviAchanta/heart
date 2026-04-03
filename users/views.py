@@ -59,19 +59,41 @@ def index(request):
 # ================================
 def UserRegisterActions(request):
     if request.method == 'POST':
-        user = UserRegistrationModel(
-            name=request.POST['name'],
-            loginid=request.POST['loginid'],
-            password=request.POST['password'],
-            mobile=request.POST['mobile'],
-            email=request.POST['email'],
+        try:
+            name = request.POST.get('name')
+            loginid = request.POST.get('loginid')
+            password = request.POST.get('password')
+            mobile = request.POST.get('mobile')
+            email = request.POST.get('email')
+            address = request.POST.get('address')
 
-            address=request.POST['address'],
+            # ✅ Validation
+            if not all([name, loginid, password, mobile, email, address]):
+                messages.error(request, "All fields are required ❌")
+                return render(request, 'UserRegistrations.html')
 
-            status='waiting'
-        )
-        user.save()
-        messages.success(request, "Registration successful!")
+            # ✅ Duplicate check
+            if UserRegistrationModel.objects.filter(loginid=loginid).exists():
+                messages.error(request, "User already exists ❌")
+                return render(request, 'UserRegistrations.html')
+
+            # ✅ Save
+            user = UserRegistrationModel(
+                name=name,
+                loginid=loginid,
+                password=password,
+                mobile=mobile,
+                email=email,
+                address=address,
+                status='waiting'
+            )
+            user.save()
+
+            messages.success(request, "Registration successful ✅")
+
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+
     return render(request, 'UserRegistrations.html')
 
 # ================================
