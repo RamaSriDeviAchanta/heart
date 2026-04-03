@@ -38,7 +38,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://heart-production-990b.up.railway.app"
+]
 
 ROOT_URLCONF = 'Cardiovascular_health_prediction.urls'
 
